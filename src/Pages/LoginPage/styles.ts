@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 10, // Shadow on Android
   },
+  backgroundImage: {
+    flex: 1, // Occupy the entire screen
+    resizeMode: 'cover', // Ensure the image covers the whole area
+    justifyContent: 'center', // Center the content vertically
+    alignItems: 'center', // Center the content horizontally
+  },
   logoContainer: {
     width: 80,
     height: 80,
