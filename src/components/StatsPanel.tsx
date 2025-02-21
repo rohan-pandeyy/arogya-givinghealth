@@ -1,14 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import * as THREE from 'three';
 
 const StatsPanel = () => {
+  const mountRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    
+    if (mountRef.current) {
+      mountRef.current.appendChild(renderer.domElement);
+    }
 
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -37,6 +42,7 @@ const StatsPanel = () => {
         <Text style={styles.textTitle}>Statistics</Text>
         <Text style={styles.textCorrection}>Correct/Incorrect</Text>
       </View>
+      <div ref={mountRef} style={{ flex: 1 }} />
     </View>
   );
 };
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: '#3F6900',
     fontWeight: 'bold',
-  }
+  },
 });
 
 export default StatsPanel;
